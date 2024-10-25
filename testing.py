@@ -132,3 +132,16 @@ def test_SaveTodoListAndEmail(mocker):
 
     assert user.todoList.save() == True
 
+def test_SaveTodoListAndEmailNotValid(mocker):
+    user = initValidUser()
+    user.createTodoList()
+    user.period = 0
+
+    mocker.patch('ToDoListClass.TodoList.save', return_value=False)
+    mocker.patch('EmailClass.Email.send', return_value=False)
+
+    for i in range(10):
+        user.addTaskInTodoList("Test" + str(i), "Test" + str(i))
+
+    assert user.todoList.save() == False
+
