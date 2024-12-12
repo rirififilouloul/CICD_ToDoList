@@ -15,7 +15,7 @@ class TodoList:
     def __init__(self):
         self.tasks : list[Item,...] = []
         self.maxTask = 10
-        self.endpointApi = "https://dummyjson.com/todos"
+        self.endpointApi = "http://localhost:5000/data"
 
     def addTask(self, newItem : Item) -> bool:
 
@@ -32,7 +32,7 @@ class TodoList:
 
     def loadFromApi(self):
 
-        response = requests.get(self.endpointApi + "?limit=10")
+        response = requests.get(self.endpointApi)
         data = response.json()
         if response.status_code != 200:
 
@@ -41,7 +41,7 @@ class TodoList:
         allTodos = data['todos']
         for todo in allTodos:
 
-            newItem : Item = Item(f"task : {todo['id']}", todo['todo'], datetime.datetime.now())
+            newItem : Item = Item(f"task : {todo['title']}", todo['content'], todo['date'])
             self.addTask(newItem)
 
         return True

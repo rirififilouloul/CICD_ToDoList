@@ -24,5 +24,10 @@ jobs:
         #pip install pytest pytest-mock # Si tu utilises un fichier requirements.txt, tu peux aussi installer à partir de là
         pip install -r requirements.txt
 
+    - name: Start Flask API in background
+      run: |
+        nohup python api.py &
+        sleep 5 
+
     - name: Run tests
       run: pytest testing.py
