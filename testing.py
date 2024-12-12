@@ -145,3 +145,9 @@ def test_SaveTodoListAndEmailNotValid(mocker):
 
     assert user.todoList.save() == False
 
+def test_LoadTodoList(mocker):
+    user = initValidUser()
+    user.createTodoList()
+
+    assert user.todoList.loadFromApi() == True
+

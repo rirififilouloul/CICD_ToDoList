@@ -1,4 +1,5 @@
 import datetime
+import requests
 
 class Item:
 
@@ -10,9 +11,11 @@ class Item:
 
 class TodoList:
 
+
     def __init__(self):
         self.tasks : list[Item,...] = []
         self.maxTask = 10
+        self.endpointApi = "https://dummyjson.com/todos"
 
     def addTask(self, newItem : Item) -> bool:
 
@@ -27,5 +30,23 @@ class TodoList:
         raise NotImplementedError("Pas implémenté")
 
 
+    def loadFromApi(self):
 
+        response = requests.get(self.endpointApi + "?limit=10")
+        data = response.json()
+        if response.status_code != 200:
+
+            return False
+
+        allTodos = data['todos']
+        for todo in allTodos:
+
+            newItem : Item = Item(f"task : {todo['id']}", todo['todo'], datetime.datetime.now())
+            self.addTask(newItem)
+
+        return True
+
+    def __print__(self):
+        for task in self.tasks:
+            print(task.name + " : " + task.content)
 
