@@ -1,6 +1,5 @@
 name: Python Test
 
-# Exécute cette action sur chaque push dans la branche "main"
 on:
   push:
     branches:
@@ -11,23 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Étape 1 : Checkout le dépôt
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Étape 2 : Configurer Python
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.11'  # Remplace 'x' par la version de Python que tu utilises (par exemple 3.8, 3.9, etc.)
+        python-version: '3.11'
 
-    # Étape 3 : Installer les dépendances
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pytest pytest-mock # Si tu utilises un fichier requirements.txt, tu peux aussi installer à partir de là
-        # pip install -r requirements.txt
+        #pip install pytest pytest-mock # Si tu utilises un fichier requirements.txt, tu peux aussi installer à partir de là
+        pip install -r requirements.txt
 
-    # Étape 4 : Exécuter les tests
     - name: Run tests
       run: pytest testing.py
