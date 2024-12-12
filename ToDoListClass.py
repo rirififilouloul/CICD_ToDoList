@@ -37,9 +37,7 @@ class TodoList:
         if response.status_code != 200:
 
             return False
-
-        allTodos = data['todos']
-        for todo in allTodos:
+        for todo in data:
 
             newItem : Item = Item(f"task : {todo['title']}", todo['content'], todo['date'])
             self.addTask(newItem)
@@ -50,3 +48,7 @@ class TodoList:
         for task in self.tasks:
             print(task.name + " : " + task.content)
 
+
+newTodoList = TodoList()
+newTodoList.loadFromApi()
+newTodoList.__print__()
